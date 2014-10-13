@@ -70,29 +70,11 @@ void* trie_insert(struct trie* data, char* key, void* val)
 // returns void pointer of thing at key
 void* trie_lookup(struct trie* data, char* key)
 {   
-    struct trie* current_node = data;
+    struct trie* current_node = trie_traverse(data, key);
 
-    printf("looking up key %s\n", key);
-
-    // increment the pointer position of key until null terminator is reached
-    while (*key != 0)
+    if (!current_node)
     {
-        printf("current prefix %c (%d)\n", *key, *key);
-
-        // try to find the correct child node
-        struct trie* next_node = current_node->children[*key];
-
-        // if next_node doesn't actually exist, return NULL
-        if (!next_node) 
-        {
-            return NULL;
-        }
-
-        // set current node to the correct child node
-        current_node = next_node;
-
-        // increment key pointer position
-        key++;
+        return NULL;
     }
 
     return current_node->val;
