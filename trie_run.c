@@ -8,13 +8,15 @@
 int main(int argc, char* argv[])
 {
 
-	int *a, *b, *c;
+	int *a, *b, *c, *d;
 	a = malloc(sizeof(int));
 	*a = 1;
 	b = malloc(sizeof(int));
 	*b = 2;
 	c = malloc(sizeof(int));
 	*c = 3;
+	d = malloc(sizeof(int));
+	*d = 4;
 
 	struct trie* test_trie = trie_create();
 	printf("created new trie at %p\n", test_trie);
@@ -36,6 +38,12 @@ int main(int argc, char* argv[])
 
 	trie_value = trie_lookup(test_trie, "ccz");
 	printf("lookup got %d\n", *trie_value);
+
+	trie_value = trie_lookup_prefix(test_trie, "c", NULL);
+	printf("prefix lookup got %d\n", *trie_value);
+
+	trie_value = trie_lookup_prefix(test_trie, "a", d);
+	printf("ambiguous prefix lookup got %d\n", *trie_value);
 
 	trie_destroy(test_trie);
 	printf("freed trie\n");
